@@ -1,0 +1,214 @@
+body {
+	background: radial-gradient(#0099ff, #0099ff);
+	/*background: radial-gradient( #3366ff, #0099ff);*/
+	background-size: 600% 600%;
+
+	-webkit-animation: AnimationName 9s ease infinite;
+	-moz-animation: AnimationName 9s ease infinite;
+	animation: AnimationName 9s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName { 
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+@font-face {
+    font-family: 'Bold'; 
+    src: url('Sornu.ttf'); 
+}
+
+h6{
+	margin-left: 635px;
+	width: 260px;
+	word-spacing: 5px; 
+	font-family: Bold; 
+	color: black;
+	font-size: 30px;
+	animation:glow 3s ease-in-out infinite;
+	-moz-transition: all 0.2s ease-in-out;
+}
+
+h6:hover {
+	font-size: 35px;
+	-moz-transition: all 0.2s ease-in-out;
+}
+
+@-moz-keyframes glow {
+	0% {text-shadow: 1px 1px 15px #80b3ff;}
+	25% {text-shadow: 1px 1px 10px #66ff99;}
+	50% {text-shadow: 1px 1px 5px orange;}
+	75% {text-shadow: 1px 1px 10px #66ff99;}
+	100% {text-shadow: 1px 1px 15px #80b3ff;}
+}
+
+a{
+	color:black;
+	text-decoration: none;
+}
+
+h1 {
+	text-align: center;
+	letter-spacing: 2px;
+	text-shadow: 2px 2px 5px gray;
+	font-size: 45px;
+	margin: 0px;
+	padding: 0px;
+	height:40px;
+	-webkit-animation-name: size;
+	-webkit-animation-duration: 1s;
+	-moz-animation-name: size;
+	-moz-animation-duration: 1s;
+}
+
+h2 {
+	color: yellow;
+	font-size: 40px;
+	text-decoration: underline;
+	font-family: Palatino Linotype;
+}
+
+h3 {
+	color: DodgerBlue;
+	line-height: 10%;
+	font-family: Palatino Linotype;
+	margin-left: 12px
+}
+
+h4 {
+	font-size: 30px;
+	font-family: Palatino Linotype;
+	text-shadow: 0 1px 0 black,
+               0 3px 0 white,
+               0 3px 0 black,
+               0 4px 0 black,
+               0 3px 0 white,
+               0 2px 1px rgba(0,0,0,.1),
+               0 0 1px rgba(0,0,0,.1),
+               0 2px 1px rgba(0,0,0,.3),
+               0 1px 1px rgba(0,0,0,.2),
+               0 0px 0px rgba(0,0,0,.25),
+               0 0px 0px rgba(0,0,0,.2),
+               0 0px 0px rgba(0,0,0,.15);
+}
+
+h5 {
+	font-size: 20px;
+	font-family: Palatino Linotype;
+}
+
+#bottom {
+	height: 100px;
+	border-top-style: solid;
+	background-color: white;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	position: fixed;
+}
+
+#top {
+	display: flex;
+	height: 100px;
+}
+
+#temp {
+	position:fixed;
+}
+
+#center {
+	
+}
+
+#box {
+	text-align: center;
+}
+
+#title {
+	background-color: #ffff66;
+	width: 275px;
+	height:100px;
+	margin-left: 325px;
+    position: relative;
+	top: 30px;
+	-webkit-clip-path: url(Index.html#clip);
+	clip-path: url(Index.html#clip);
+    -webkit-animation-name: slide; 
+	-moz-animation-name: slide;
+    -webkit-animation-duration: 1s; 
+	-moz-animation-duration: 1s; 
+}
+
+@-webkit-keyframes slide {
+    0%   {left:400px; width:100px;}
+    100% {left:0px; width:275px;}
+}
+
+@-webkit-keyframes size {
+	0% {font-size:15px;}
+	100% {font-size:45px;}
+}
+
+@-moz-keyframes slide {
+    0%   {left:400px; width:100px;}
+    100% {left:0px; width:275px;}
+}
+
+@-moz-keyframes size {
+	0% {font-size:15px;}
+	100% {font-size:45px;}
+}
+
+.blur {
+	margin-top: 30px;
+	display: inline;
+	padding: 10px;
+    margin: 30px 175px; 
+    position: relative;
+	width: 370px;
+	height: 50px;
+	word-spacing: 95px;
+}
+
+.blur li{
+    font-size: 35px;
+    display: inline;
+	text-align: center;
+	font-family: Palatino Linotype;
+	margin-top: 40px;
+}
+
+.blur li a{
+	color: black;
+	display: inline;
+	text-decoration: none;
+	text-transform: uppercase;
+	text-shadow: 0px 0px 0px #fff;
+	letter-spacing: 3px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+
+.blur:hover li a{
+	text-shadow: 0px 0px 6px #fff;
+}
+
+.blur li a:hover{
+	color: #004d66;
+	text-shadow: 0px 0px 6px #fff;
+	font-size: 40px;
+}

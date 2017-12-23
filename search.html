@@ -1,0 +1,134 @@
+<!DOCTYPE html> <!-- put in notepad++ so that it knows its html file -->
+<html> <!-- starts the html file -->
+<head>
+	<link rel="stylesheet" href="main.css"> <!--refering the html file to your style sheet-->
+	<title>For All your Tech Needs</title> <!-- prints the title on the top of the tab -->
+	<link rel="icon" href="logo.png" type="image/png"> <!-- prints a picture of the logo on the tab -->
+	<meta charset = "UTF-8"/> <!-- put this on everything -->
+</head><!-- end the head -->
+
+<body> <!-- starts the body header -->
+	<style>
+		#title {
+			-webkit-clip-path: url(search.html#clip); <!-- the name of the url when its entered in the search bar or referred too in other sheets -->
+			clip-path: url(search.html#clip);
+		}
+	</style>
+	<div id="title"> <!-- header of the body -->
+		<h1><a href = "file:Index.html">Best</h1> <!-- button that brings you to index.html -->
+		<h1>Purchase</h1>
+		<!--<svg width="0" height="0">
+			<defs>
+				<clipPath id="clip" clipPathUnits="objectBoundingBox">
+					<polygon points="1 0, 0.9 0.5, 1 1, 0.12 1, 0 0.5, 0.12 0" />
+				</clipPath>
+			</defs>
+		</svg>-->
+	</div>
+
+	<br><br>
+	<div id="main"><!--Side menu, div id is refers to the div id in main.css-->
+		<div id="list">
+			<ul class="blur">
+			  <li><a href="Index.html">Home</a></li> <!-- click in this to go to Index.html -->
+			  <li><a href="search.html">Search</a></li>
+			  <li><a href="shop.html">Shop</a></li>
+			  <li><a href="checkout.html">Checkout</a></li>
+			  <li><a href="support.html">Support</a></li>
+			  <li><a href="contact.html">Contact</a></li>
+			</ul>
+		</div>
+		<div id="search"><!--Search Bar-->
+			<h2>Search for an item:</h2>
+			<input id="numb">
+			<button type="button" onclick="searchFunction()"style = "text-align:center">Search</button> <!-- on click is the function the Jscript does when it's clicked -->
+			<button type="button" id = "clear"style = "text-align:center">Clear Cart</button><!--Clear Cart-->
+			<p id="find" style = "color:gold;"></p>
+			<table id="results">
+			</table> <!-- make table -->
+		</div>
+	</div>
+	
+	<script> <!-- used to write script -->
+		var rows = new Array();//for Table
+		var cells = new Array(7);//For Table
+		var buttons = new Array();//Button Array
+		var x;//Gets value of input and stores into x
+		var node = new Array();//For Table
+		var imageArray = JSON.parse(localStorage.getItem("product")); //CSV STORED, NOT A PICTURE ARRAY!!!
+		var shoppingCart = JSON.parse(localStorage.getItem("cart")); //Shopping cart
+		var g = JSON.parse(localStorage.getItem("count")); //Used for postioning the items 
+		var clearButton = document.getElementById("clear"); //button that says clear
+		var length = JSON.parse(localStorage.getItem("length")); //Uses length of CSV for various Arrays
+		
+		if (JSON.parse(localStorage.getItem("count"))== null || JSON.parse(localStorage.getItem("count")) == 0) {//If the cart is empty, have the postion of the shopping cart array = 0
+			g = 0;
+		} else {	
+			g = JSON.parse(localStorage.getItem("count"));
+		}	
+		
+		clearButton.addEventListener ("click", function(e) {//Clear button
+			for (var i = 0; i < shoppingCart.length; i++) {
+				shoppingCart[i] = "";
+				shoppingCart[i].defaultValue;
+				g = 0;
+				g.defaultValue;
+				shoppingCart.length = 0;
+			}
+			
+			localStorage.setItem("cart", JSON.stringify(shoppingCart));
+			localStorage.setItem("count", JSON.stringify(g));
+			alert("Cart Cleared!");
+		});	
+		
+		var table = document.getElementById("results");//Creates a table and buttons
+		for (var j = 0; j < length; j++) {		
+			buttons[j] = document.createElement("BUTTON");
+			buttons[j].setAttribute("type", "button");
+			buttons[j].setAttribute("id", "button" + j);
+			buttons[j].innerHTML = "Buy now";
+			buttons[j].value = j;
+			buttonCreate(j, buttons);
+		}
+		
+		function searchFunction() {
+			x = document.getElementById("numb").value;
+			document.getElementById("results").innerHTML = "";
+			for (var z = 0; z < length-1; z++) {//Create the table
+				//Search if statement is below. Check for Category, product name and description.
+				if ((imageArray[z][1].toLowerCase()).indexOf(x.toLowerCase()) != -1 || (imageArray[z][5].toLowerCase()).indexOf(x.toLowerCase()) != -1 ||(imageArray[z][4].toLowerCase()).indexOf(x.toLowerCase()) != -1) {
+					rows[z] = table.insertRow(-1);
+					for (var i = 1; i < 5; i++) {
+						cells[i] = rows[z].insertCell(-1);
+						if (i == 1) {
+							cells[1].appendChild(document.createTextNode(imageArray[z][i]));
+						} else if (i == 2) {
+							cells[2].appendChild(document.createTextNode(imageArray[z][4]));
+						} else if (i == 3) {
+							cells[3].appendChild(document.createTextNode("$" + imageArray[z][5]))
+						} else {
+							cells[4].appendChild(buttons[z]);
+						}
+					}
+				}
+			}
+		}
+		function buttonCreate(index, array) { //Adds a numerical value to the button
+			array[index].onclick = function() { //Stores item into shoppingChart when clicked
+				if(typeof(Storage) !== "undefined") {
+					var buttonClicked = array[index].value;
+					shoppingCart[g] = imageArray[buttonClicked][1];
+					shoppingCart[g].defaultValue;
+					localStorage.setItem("cart", JSON.stringify(shoppingCart));
+				} else {
+					alert("Please reload the page");
+				}
+				g++;
+				localStorage.setItem("count", JSON.stringify(g));
+				alert("Added to cart!");
+			}
+	    }
+	</script>
+</body>
+
+</html>

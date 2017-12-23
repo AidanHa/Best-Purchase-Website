@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="main.css">
+	<title>For All your Tech Needs</title>
+	<link rel="icon" href="logo.png" type="image/png">
+	<meta charset = "UTF-8"/>
+</head>
+
+<body>
+	<style>
+		#title {
+			-webkit-clip-path: url(shop.html#clip);
+			clip-path: url(shop.html#clip);
+		}
+	</style>
+	
+	<div id="title">
+		<h1>Best</h1>
+		<h1>Purchase</h1>
+		<svg width="0" height="0">
+			<defs>
+				<clipPath id="clip" clipPathUnits="objectBoundingBox">
+					<polygon points="1 0, 0.9 0.5, 1 1, 0.12 1, 0 0.5, 0.12 0" />
+				</clipPath>
+			</defs>
+		</svg>
+	</div>
+	
+		<br><br>
+	
+	<div id="main">
+		<div id="list">
+			<ul class="blur">
+			  <li><a href="Index.html">Home</a></li>
+			  <li><a href="search.html">Search</a></li>
+			  <li><a href="shop.html">Shop</a></li>
+			  <li><a href="checkout.html">Checkout</a></li>
+			  <li><a href="support.html">Support</a></li>
+			  <li><a href="contact.html">Contact</a></li>
+			</ul>
+		</div>
+		
+		<table id="filter">
+			<tr>
+				<th>Filter By:</th>
+				<th><button id="Name" class = "sort">Name</th>
+				<th><button id="Category" class = "sort">Category</th>
+				<th><button id="Company" class = "sort">Company</th>
+				<th><button id="Clear">Clear Cart</th>
+			</tr>
+		</table>
+	</div>
+	
+	<div id="product">
+		<table id="tableau" cellpadding="10px">
+		</table>
+	</div>
+	
+	<script>
+		var filterArray = new Array();//Arrays must be declared individually...
+		var rows = new Array(); //table
+		var cells = new Array();//table
+		var buttons = new Array();//table
+		var node = new Array();//table
+		var imgArray = new Array();//table
+		var button1 = document.getElementById("Name");
+		var button2 = document.getElementById("Category");
+		var button3 = document.getElementById("Company");
+		var button4 = document.getElementById("Clear");
+		var imageArray = JSON.parse(localStorage.getItem("product"));//THIS IS THE CSV FILE STORED!
+		var shoppingCart = new Array();//cart
+		var length = JSON.parse(localStorage.getItem("length"));
+		var table = document.getElementById("tableau");
+		var g;
+		
+		if (JSON.parse(localStorage.getItem("count")) == null || JSON.parse(localStorage.getItem("count")) == 0) {//for shopping cart position of item
+			g = 0;
+		} else {
+			g = JSON.parse(localStorage.getItem("count"));
+		}
+		
+		button1.addEventListener ("click", function(e)  {//Sort by Name
+			for (var i = 0; i < length; i++) {
+				filterArray[i] = imageArray[i][1]; 
+			}
+			filterArray.sort();
+			filterFunction();
+		});
+		
+		button2.addEventListener ("click", function(e)  {//Sort by Catergory
+			var allCategories = new Array();
+			for (var i = 0; i < length; i++) {
+				allCategories[i] = imageArray[i][2];
+			}
+			allCategories.sort();
+			var sortByArray = allCategories.filter(onlyUnique);
+			var x = 0;
+			for (var i = 0; i < sortByArray.length; i++) {
+				for (var j = 0; j < length; j++) {
+					if (sortByArray[i] == imageArray[j][2]) {
+						filterArray[x] = imageArray[j][1]
+						x++;
+					}
+				}	
+			}
+			filterFunction();
+		});
+		
+		button3.addEventListener ("click", function(e)  {//Sort by Company
+			var allCompanies = new Array();
+			for (var i = 0; i < length; i++) {
+				allCompanies[i] = imageArray[i][3];
+			}
+			allCompanies.sort();
+			var sortByArray = allCompanies.filter(onlyUnique);
+			var x = 0;
+			for (var i = 0; i < sortByArray.length; i++) {
+				for (var j = 0; j < length; j++) {
+					if (sortByArray[i] == imageArray[j][3]) {
+						filterArray[x] = imageArray[j][1]
+						x++;
+					}
+				}
+			}
+			filterFunction();
+		});
+		
+		button4.addEventListener ("click", function(e)  {//for clearing cart
+			for (var i = 0; i < shoppingCart.length; i++) {
+				shoppingCart[i] = "";
+				shoppingCart[i].defaultValue;
+				g = 0;
+				g.defaultValue;
+				shoppingCart.length = 0;
+			}
+			localStorage.setItem("cart", JSON.stringify(shoppingCart));
+			localStorage.setItem("count", JSON.stringify(g));
+			alert("Cart Cleared!");
+		});	
+		
+		for (var j = 0; j < length; j++) { //Initially displaying the shop
+			filterArray[j] = imageArray[j][1]
+		}
+		filterFunction();
+		
+		    function filterFunction() { //function for taking the filter array from the EventListeners and uses that to display the products accordingly
+				table.innerHTML = "";//Clears the old board
+				for (var j = 0; j < length-1; j++) {
+					buttons[j] = document.createElement("BUTTON");//Create buttons with according value
+					buttons[j].setAttribute("type", "button");
+					buttons[j].setAttribute("id", "button" + j);
+					buttons[j].innerHTML = "Buy now";
+					buttons[j].value = j;
+					rows[j] = table.insertRow(-1);
+					imgArray[j] = new Image();
+					imgArray[j].src = (imageArray[j][6]);
+					buttonCreate(j, buttons);
+				}
+				for (var j = 0; j < length-1; j++) {
+					var count = 0;
+					while (filterArray[j] != imageArray[count][1]) {
+						count++; //Uses filter Array to sort out when each product is displayed.
+					}
+					for (var i = 0; i < 7; i++) {//Insert cells depending on count
+						cells[i] = rows[j].insertCell(-1);
+						if (i == 0) {
+							cells[0].appendChild(imgArray[count]);
+						} else if (i == 5) {
+							cells[i].appendChild(document.createTextNode("$" + imageArray[count][i]));
+						} else if (i != 6) {
+							cells[i].appendChild(document.createTextNode(imageArray[count][i]));
+						} else {
+							cells[6].appendChild(buttons[count]);
+						}								
+					}
+				}
+			}
+			
+		function onlyUnique(value, index, self) { 
+			return self.indexOf(value) === index; //Used to create the filter array, and to make sure no value is repeated twice
+		}
+			
+		function buttonCreate(index, array) { //Function used to add item to shopping cart.
+			array[index].onclick = function() {
+				if(typeof(Storage) !== "undefined") {
+					var buttonClicked = array[index].value;
+					shoppingCart[g] = imageArray[buttonClicked][1];
+					shoppingCart[g].defaultValue;
+					localStorage.setItem("cart", JSON.stringify(shoppingCart)); //Use of local storage for shopping cart.
+				} else {
+					alert("Please reload the page");
+				}
+				g++;
+				localStorage.setItem("count", JSON.stringify(g));
+				alert("Added to cart!");
+			}
+	    }
+	</script>
+</body>
+
+</html>

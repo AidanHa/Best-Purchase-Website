@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="main.css">
+	<title>For All your Tech Needs</title>
+	<link rel="icon" href="logo.png" type="image/png">
+	<meta charset = "UTF-8"/>
+</head>
+
+<body>
+	<style>
+		#title {
+			-webkit-clip-path: url(checkout.html#clip);
+			clip-path: url(checkout.html#clip);
+		}
+	</style>
+	<div id="title">
+		<h1><a href = "file:Index.html">Best</h1>
+		<h1>Purchase</h1>
+		<svg width="0" height="0">
+			<defs>
+				<clipPath id="clip" clipPathUnits="objectBoundingBox">
+					<polygon points="1 0, 0.9 0.5, 1 1, 0.12 1, 0 0.5, 0.12 0" />
+				</clipPath>
+			</defs>
+		</svg>
+	</div>
+
+	<br><br>
+	<div id="main">
+		<div id="list">
+			<ul class="blur"><!--side menu-->
+			  <li><a href="Index.html">Home</a></li>
+			  <li><a href="search.html">Search</a></li>
+			  <li><a href="shop.html">Shop</a></li>
+			  <li><a href="checkout.html">Checkout</a></li>
+			  <li><a href="support.html">Support</a></li>
+			  <li><a href="contact.html">Contact</a></li>
+			</ul>
+		</div>
+		
+		<div id="check"><!--Checkout buttons-->
+			<h2>Checkout:</h2>
+			<p id = "price"></p>
+			<button type="button" id = "purchase" style = "text-align:center">Purchase all items</button>
+			<button type="button" id = "clear"style = "text-align:center">Clear Cart</button>
+			<table id="results">
+			</table>
+		</div>
+	</div>
+
+	<script>
+		var rows = new Array();//For the table
+		var cells = new Array();//For the table
+		var x;
+		var price, finalPrice = 0;//Price in the end
+		var node = new Array();//Table
+		var table = document.getElementById("results");
+		var imageArray = JSON.parse(localStorage.getItem("product"));//THIS IS THE CSV FILE STORED
+		var shoppingCart = JSON.parse(localStorage.getItem("cart"));
+		var length = JSON.parse(localStorage.getItem("length"));
+		var g = JSON.parse(localStorage.getItem("count"));
+		var purchaseButton = document.getElementById("purchase");
+		var clearButton = document.getElementById("clear");
+		purchaseButton.addEventListener ("click", function(e) { //For purchase
+			for (var i = 0; i < shoppingCart.length; i++) {
+				shoppingCart[i] = "";
+				g = 0;
+				g.defaultValue;
+				shoppingCart.length = 0;
+				shoppingCart.defaultValue;
+				
+			}	
+			finalPrice = 0;
+			localStorage.setItem("cart", JSON.stringify(shoppingCart));
+			localStorage.setItem("count", JSON.stringify(g));
+			alert("Purchase complete! Your item will be delivered in 3-12 business days.");
+			table.innerHTML = "";	
+			document.getElementById("price").innerHTML = "Your total is: $" + Math.round(finalPrice * 100) / 100; 
+		});	
+		clearButton.addEventListener ("click", function(e) { //For clear
+			for (var i = 0; i < shoppingCart.length; i++) {
+				shoppingCart[i] = "";
+				g = 0;
+				g.defaultValue;
+				shoppingCart.length = 0;
+				shoppingCart.defaultValue;
+				finalPrice = 0;
+			}	
+			localStorage.setItem("cart", JSON.stringify(shoppingCart));
+			localStorage.setItem("count", JSON.stringify(g));
+			alert("cart cleared!");
+			table.innerHTML = "";
+			document.getElementById("price").innerHTML = "Your total is: $" + Math.round(finalPrice * 100) / 100			
+		});	
+		
+		var index = shoppingCart.indexOf(null); //Make sure that there is no null values in the shopping cart
+		while (index != -1) {
+			shoppingCart.splice(index, 1);
+			index = shoppingCart.indexOf(null);
+		}
+		
+		for (var g = 0; g < shoppingCart.length; g++) { //Creates table according to the length of the shopping cart
+			for (var z = 0; z < length; z++) {
+				if (shoppingCart[g] == imageArray[z][1]) {
+					rows[z] = table.insertRow(-1);
+					for (var i = 1; i < 3; i++) {
+						cells[i] = rows[z].insertCell(-1);
+						node[z] = document.createTextNode(imageArray[z][i]);
+						if (i == 1) {
+							cells[1].appendChild(node[z]);
+						} else if (i == 2) {
+							cells[2].appendChild(document.createTextNode("$" + imageArray[z][5]));
+							price = parseFloat(imageArray[z][5]); //Retrieves price from imageArray(CSV file)
+							finalPrice += price; //Adds up price
+						}
+					}
+				}
+			}
+		}
+		document.getElementById("price").innerHTML = "Your total is: $" + Math.round(finalPrice * 100) / 100; //Displays the final price of all the purchases
+	</script>
+</body>
+
+</html>

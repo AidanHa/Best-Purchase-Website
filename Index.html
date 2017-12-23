@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="stylish.css">
+	<title>For All your Tech Needs</title>
+	<link rel="icon" href="logo.png" type="image/png">
+	<meta charset = "UTF-8"/>
+</head>
+
+<body>
+			
+	<div id="top">
+		<img src="Asus.png" alt="In Search of Incredible" style="width:250px;height:215px;margin-left:30px;"> <!--tittle page formatting (Top)-->
+		<div id="title"> <!--refers to title div on css -->
+			<h1>Best</h1>
+			<h1>Purchase</h1>
+			<svg width="0" height="0">
+				<defs>
+					<clipPath id="clip" clipPathUnits="objectBoundingBox">
+						<polygon points="1 0, 0.9 0.5, 1 1, 0.12 1, 0 0.5, 0.12 0" />
+					</clipPath>
+				</defs>
+			</svg>
+		</div>
+		<div id="temp">
+			<img src="Corsair.png" alt="Arr" style="width:335px;height:115px;margin-left:1150px;margin-top:30px;">
+		</div>
+	</div>
+
+	<br><br>
+
+	<div id="center">
+		<div id="box"><!--Parts in the middle-->
+			<h4>Looking for the Best Deals on Top Quality Computer Hardware?</h4>
+			<h5>You've come to the right place!</h5>
+			
+			<h6><a href="shop.html">Start Shopping!</h6> <!-- a heref means where it goes after clicking -->
+		</div>
+	</div>
+
+	<div id ="bottom"><!--Bottom formatting-->
+		<ul class="blur">
+		  <li><a href="search.html">Search</a></li>
+		  <li><a href="checkout.html">Checkout</a></li>
+		  <li><a href="support.html">Support</a></li>
+		  <li><a href="contact.html">Contact</a></li>
+		</ul>
+	</div>
+
+	<script>
+		var file = new XMLHttpRequest();
+		var allText = new Array();
+		var test = new Array();
+		var shoppingCart = new Array();
+		file.open("GET", "Inventory.csv"); //Retrieves CSV file.
+		//creates file that changes the values of the array without refreshing the page.
+		file.onreadystatechange = function () {
+
+			if(file.readyState === 4) {
+				if(file.status === 200 || file.status == 0) {
+					var text = file.responseText;
+					allText = text.split(/\r\n|\n/);//splits csv file into lines
+					for (var i = 0; i < allText.length; i++) {
+						//for (var z = 0; z < 7; z++) {
+							test[i] = allText[i].split(","); //Seperates the CSV file lines into "test" array.
+						//}
+					}
+				}
+				if(typeof(Storage) !== "undefined") {
+					localStorage.setItem("product", JSON.stringify(test));//Stores the CSV file into a local storage array.
+					localStorage.setItem("cart", JSON.stringify(shoppingCart)); // Creates the shopping cart and stores it into a local storage.
+					localStorage.setItem("length", JSON.stringify(allText.length));//Finds the length of the CSV file and stores it into a variable. Will be used latter for several arrays.
+				} else {
+					alert("Please reload the page");
+				}
+			}
+		}
+		file.send();
+	</script>
+	
+</html>
